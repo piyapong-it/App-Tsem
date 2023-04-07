@@ -243,6 +243,7 @@ class _SignFormState extends State<SignForm> {
         storage.write(key: JDECODE, value: _user.jdeCode);
         storage.write(
             key: FULLNAME, value: _user.firstName + ' ' + _user.lastName);
+        storage.write(key: FRISTNAME, value: _user.firstName);
         storage.write(key: APPLEVEL, value: _user.level);
         storage.write(key: USERTOKEN, value: _user.token);
 

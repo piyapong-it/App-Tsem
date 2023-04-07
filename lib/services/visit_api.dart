@@ -12,6 +12,7 @@ import 'package:tsem/models/visitcallcard.dart';
 import 'package:tsem/models/visitcount.dart';
 import 'package:tsem/models/visiteoe.dart';
 import 'package:tsem/models/visitmjp.dart';
+import 'package:tsem/models/itemvisiteoe.dart';
 
 import '../constants.dart';
 
@@ -35,14 +36,15 @@ class VisitApi {
       String _token = await storage.read(key: USERTOKEN);
 
       final uri = Uri.http(endpoint, "/api/visit/insertVisit");
-      Response response = await _dio.post(uri.toString(), data: {
-        "outletid": outletid,
-        "visitdate": DateFormat('dd/MMM/yyyy').format(visitdate),
-        "jdecode": _jdecode,
-        "lat": lat,
-        "lng": lng
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "outletid": outletid,
+            "visitdate": DateFormat('dd/MMM/yyyy').format(visitdate),
+            "jdecode": _jdecode,
+            "lat": lat,
+            "lng": lng
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
       var jsonResponse = json.decode(response.data);
       DmLmessage result = DmLmessage.fromJson(jsonResponse);
       return result;
@@ -58,11 +60,12 @@ class VisitApi {
       String _token = await storage.read(key: USERTOKEN);
 
       final uri = Uri.http(endpoint, "/api/visit/getVisitAgenda");
-      Response response = await _dio.post(uri.toString(), data: {
-        "outletid": outletid,
-        "visitdate": DateFormat('dd/MMM/yyyy').format(visitdate)
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "outletid": outletid,
+            "visitdate": DateFormat('dd/MMM/yyyy').format(visitdate)
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
       VisitAgenda result = VisitAgenda.fromJson(jsonResponse);
@@ -79,12 +82,13 @@ class VisitApi {
       String _token = await storage.read(key: USERTOKEN);
 
       final uri = Uri.http(endpoint, "/api/visit/getVisitEOE");
-      Response response = await _dio.post(uri.toString(), data: {
-        "outletid": outletid,
-        "visitdate": DateFormat('dd/MMM/yyyy').format(visitdate),
-        "group": group
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "outletid": outletid,
+            "visitdate": DateFormat('dd/MMM/yyyy').format(visitdate),
+            "group": group
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
       VisitEoE result = VisitEoE.fromJson(jsonResponse);
@@ -106,12 +110,13 @@ class VisitApi {
       print('visit status = ${visitStatus}');
       print('user naem = ${_username}');
 
-      Response response = await _dio.post(uri.toString(), data: {
-        "visitid": visitId,
-        "visitstatus": visitStatus,
-        "updateby": _username
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "visitid": visitId,
+            "visitstatus": visitStatus,
+            "updateby": _username
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
       var jsonResponse = json.decode(response.data);
       DmLmessage result = DmLmessage.fromJson(jsonResponse);
       print('dmlmessage = ${result.message}');
@@ -129,12 +134,13 @@ class VisitApi {
       String _token = await storage.read(key: USERTOKEN);
 
       final uri = Uri.http(endpoint, "/api/visit/updateVisitAgenda");
-      Response response = await _dio.post(uri.toString(), data: {
-        "visitid": visitId,
-        "agendaid": agendaId,
-        "visitstatus": visitStatus
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "visitid": visitId,
+            "agendaid": agendaId,
+            "visitstatus": visitStatus
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
       var jsonResponse = json.decode(response.data);
       DmLmessage result = DmLmessage.fromJson(jsonResponse);
       return result;
@@ -152,13 +158,14 @@ class VisitApi {
 
       final uri = Uri.http(endpoint, "/api/visit/updateVisitEoE");
 
-      Response response = await _dio.post(uri.toString(), data: {
-        "visitid": visitId,
-        "agendaid": agendaId,
-        "eoeseq": eoeSeq,
-        "eoeflag": eoeFlag
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "visitid": visitId,
+            "agendaid": agendaId,
+            "eoeseq": eoeSeq,
+            "eoeflag": eoeFlag
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
       var jsonResponse = json.decode(response.data);
       DmLmessage result = DmLmessage.fromJson(jsonResponse);
       return result;
@@ -176,7 +183,7 @@ class VisitApi {
       final uri = Uri.http(endpoint, "/api/visit/getVisitMjp/" + _jdecode);
 
       Response response = await _dio.get(uri.toString(),
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
 
@@ -199,7 +206,7 @@ class VisitApi {
           Uri.http(endpoint, "/api/visit/getVisitCallCard", queryParameters);
 
       Response response = await _dio.get(uri.toString(),
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
       VisitCallCard result = VisitCallCard.fromJson(jsonResponse);
@@ -227,20 +234,21 @@ class VisitApi {
       String _token = await storage.read(key: USERTOKEN);
 
       final uri = Uri.http(endpoint, "/api/visit/updateVisitCallCard");
-      Response response = await _dio.post(uri.toString(), data: {
-        "visitid": visitId,
-        "agendaid": agendaId,
-        "pmid": pmid,
-        "premas": premas,
-        "mas": mas,
-        "price": price,
-        "stock": stock,
-        "productdate": productdate,
-        "updateby": _username,
-        "outletid": outletid,
-        "visitdate": visitdate
-      },
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+      Response response = await _dio.post(uri.toString(),
+          data: {
+            "visitid": visitId,
+            "agendaid": agendaId,
+            "pmid": pmid,
+            "premas": premas,
+            "mas": mas,
+            "price": price,
+            "stock": stock,
+            "productdate": productdate,
+            "updateby": _username,
+            "outletid": outletid,
+            "visitdate": visitdate
+          },
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
 
@@ -283,7 +291,7 @@ class VisitApi {
       final uri = Uri.http(endpoint, "/api/visit/getVisitCount/" + _jdecode);
 
       Response response = await _dio.get(uri.toString(),
-      options: Options(headers: {"Authorization": "Bearer $_token"}));
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
 
@@ -301,9 +309,9 @@ class VisitApi {
       String _token = await storage.read(key: USERTOKEN);
 
       final uri = Uri.http(endpoint, "/api/visit/getVisit/" + outletId);
-      
+
       Response response = await _dio.get(uri.toString(),
-       options: Options(headers: {"Authorization": "Bearer $_token"}));
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
 
       var jsonResponse = json.decode(response.data);
 
@@ -311,6 +319,73 @@ class VisitApi {
 
       return result;
     } catch (e) {
+      return (e);
+    }
+  }
+
+// new
+  Future<DmLmessage> fetchInsertVisitEOE(data) async {
+    try {
+      final storage = new FlutterSecureStorage();
+      String _username = await storage.read(key: USERNAME);
+      String _token = await storage.read(key: USERTOKEN);
+
+      final uri = Uri.http(endpoint, "/api/visit/insertVisitEoE/");
+
+      Response response = await _dio.post(uri.toString(),
+          data: data,
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
+
+      var jsonResponse = json.decode(response.data);
+
+      DmLmessage result = DmLmessage.fromJson(jsonResponse);
+      return result;
+    } catch (e) {
+      print('e: ${e}');
+      return (e);
+    }
+  }
+
+  Future<DmLmessage> fetchDelVisitEOEAll(data) async {
+    try {
+      final storage = new FlutterSecureStorage();
+      String _username = await storage.read(key: USERNAME);
+      String _token = await storage.read(key: USERTOKEN);
+
+      final uri = Uri.http(endpoint, "/api/visit/deleteVisitEoE/");
+
+      Response response = await _dio.post(uri.toString(),
+          data: data,
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
+
+      var jsonResponse = json.decode(response.data);
+
+      DmLmessage result = DmLmessage.fromJson(jsonResponse);
+      return result;
+    } catch (e) {
+      print('e: ${e}');
+      return (e);
+    }
+  }
+
+  Future<ItemVisitEoE> fetchItemVisitEoE(Object data) async {
+    try {
+      final storage = new FlutterSecureStorage();
+      String _username = await storage.read(key: USERNAME);
+      String _token = await storage.read(key: USERTOKEN);
+
+      final uri = Uri.http(endpoint, "/api/visit/getVisitEoEAll/");
+
+      Response response = await _dio.post(uri.toString(),
+          data: data,
+          options: Options(headers: {"Authorization": "Bearer $_token"}));
+
+      var jsonResponse = json.decode(response.data);
+
+      ItemVisitEoE result = ItemVisitEoE.fromJson(jsonResponse);
+      return result;
+    } catch (e) {
+      print('e: ${e}');
       return (e);
     }
   }

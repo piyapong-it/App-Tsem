@@ -9,6 +9,7 @@ import 'package:tsem/models/outletnearby.dart';
 import 'package:tsem/models/outlets.dart';
 import 'package:tsem/models/outlettype.dart';
 import 'package:tsem/models/outletall.dart';
+import 'package:tsem/models/outletupdate.dart';
 import '../constants.dart';
 
 class OutletApi {
@@ -34,7 +35,6 @@ class OutletApi {
       Response response = await _dio.get(uri.toString(),
           options: Options(headers: {"Authorization": "Bearer $_token"}));
       var jsonResponse = json.decode(response.data);
-
       Outlets outletResult = Outlets.fromJson(jsonResponse);
 
       return outletResult;
@@ -124,14 +124,13 @@ class OutletApi {
     }
   }
 
-    Future<OutletAll> fetchOutletAll() async {
+  Future<OutletAll> fetchOutletAll() async {
     try {
       final storage = new FlutterSecureStorage();
       String _jdecode = await storage.read(key: JDECODE);
       String _token = await storage.read(key: USERTOKEN);
 
-      final uri =
-          Uri.http(endpoint, "/api/outlets/getOutletAll");
+      final uri = Uri.http(endpoint, "/api/outlets/getOutletAll");
       Response response = await _dio.get(uri.toString(),
           options: Options(headers: {"Authorization": "Bearer $_token"}));
 
@@ -143,6 +142,25 @@ class OutletApi {
       return outletResult;
     } catch (e) {
       return (e);
+    }
+  }
+
+  Future<UpdateOutl> UpdateOutlet({data}) async {
+    try {
+      final storage = new FlutterSecureStorage();
+      String _token = await storage.read(key: USERTOKEN);
+      print("data$data");
+      final uri = Uri.http(endpoint, "/api/outlets/updateOutletDetail");
+      Response response = await _dio.post(uri.toString(),
+          data: data,
+          options: Options(
+              headers: {"Authorization": "Bearer $_token"},
+              contentType: 'application/json'));
+      var jsonResponse = json.decode(response.data);
+      UpdateOutl result = UpdateOutl.fromJson(jsonResponse);
+      return result;
+    } catch (e) {
+      print('E ${e}');
     }
   }
 }
