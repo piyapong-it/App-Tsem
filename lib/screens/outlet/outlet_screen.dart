@@ -158,7 +158,6 @@ class _OutletScreenState extends State<OutletScreen> {
       }
 
       setState(() {
-        print('Number of Outlet ${_nodesForDisplay.length.toString()}');
         _nodes.addAll(value.result);
         _nodesForDisplay = _nodes;
         numberOfOutlet = _nodesForDisplay.length.toString();

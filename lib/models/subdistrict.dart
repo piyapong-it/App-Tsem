@@ -37,6 +37,8 @@ class SubDistrictResult {
     zipCode: json["CM#ZIP_CODE"].toString()
   );
 
+  get isNotEmpty => null;
+
     Map<String, dynamic> toJson() => {
     "CM#SUBDISTRICT_ID": subdistrictId,
     "CM#SUBDISTRICT_NAME": subdistrictName,

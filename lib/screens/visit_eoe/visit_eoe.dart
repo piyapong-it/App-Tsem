@@ -7,6 +7,7 @@ import 'package:tsem/models/visiteoe.dart';
 import 'package:tsem/provider/visit_provider.dart';
 import 'package:tsem/screens/outlet/outlet_screen.dart';
 import 'package:tsem/screens/sign_in/sign_in_screen.dart';
+import 'components/eoe_add.dart';
 
 import '../../size_config.dart';
 
@@ -18,13 +19,15 @@ class VisitEoeScreen extends StatefulWidget {
   DateTime visitDate;
   int agendaId;
   String agendaGroup;
+  String visitId;
 
   VisitEoeScreen(
       {this.outletId,
       this.visitDate,
       this.outletName,
       this.agendaId,
-      this.agendaGroup});
+      this.agendaGroup,
+      this.visitId});
 
   @override
   _VisitEoeScreenState createState() => _VisitEoeScreenState();
@@ -78,33 +81,58 @@ class _VisitEoeScreenState extends State<VisitEoeScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: DefaultControl.headerText(
-              headText: widget.outletName +
-                  " " +
-                  DateFormat('d MMM').format(widget.visitDate)),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.save,
-                size: 35.0,
-              ),
-              tooltip: "Save",
-              onPressed: () {
-                saveEoeHead();
-              },
-            ),
-          ],
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
         ),
-        body: _nodes.length == 0
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : _showEOE());
+        title: DefaultControl.headerText(
+            headText: widget.outletName +
+                " " +
+                DateFormat('d MMM').format(widget.visitDate)),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.save,
+              size: 35.0,
+            ),
+            tooltip: "Save",
+            onPressed: () {
+              // saveEoeHead();
+              saveTest();
+            },
+          ),
+        ],
+      ),
+      body: _nodes.length == 0
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SafeArea(child: _showEOE()),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EoeAdd(
+                visitId: widget.visitId,
+                agendaId: widget.agendaId,
+                outletName: widget.outletName,
+                visitDate: widget.visitDate,
+                outletId: widget.outletId,
+              ),
+            ),
+          ).then((value) {
+            setState(() {
+              // _nodes = [];
+              // getCallCard();
+            });
+          });
+        },
+        tooltip: 'Add Product',
+        child: Icon(Icons.add),
+      ),
+    );
   }
 
   Widget _showEOE() {
@@ -114,12 +142,6 @@ class _VisitEoeScreenState extends State<VisitEoeScreen> {
       )),
       child: Column(
         children: [
-          // SizedBox(height: SizeConfig.screenHeight * 0.02),
-          // Text(
-          //   DateFormat('d/MMM/yy').format(widget.visitDate),
-          //   style:
-          //   TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
-          // ),
           SizedBox(height: SizeConfig.screenHeight * 0.02),
           Expanded(
             child: Center(
@@ -153,20 +175,16 @@ class _VisitEoeScreenState extends State<VisitEoeScreen> {
           child: Container(
             margin: EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(5.0),
                 border: Border.all(color: _borderColor, width: 4.0)),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child:
-                  // Image.network(
-                  //   item.eoeImage,
-                  //   fit: BoxFit.cover,
-                  //   width: SizeConfig.screenHeight * 0.16,
-                  // ),
-                  FadeInImage.memoryNetwork(
+              borderRadius: BorderRadius.circular(5.0),
+              child: FadeInImage.memoryNetwork(
                 fit: BoxFit.cover,
-                width: SizeConfig.screenHeight * 0.16,
+                width: 90,
+                height: 90,
                 placeholder: kTransparentImage,
+                // image: 'https://picsum.photos/250?image=9',
                 image: item.eoeImage,
               ),
             ),
@@ -201,6 +219,46 @@ class _VisitEoeScreenState extends State<VisitEoeScreen> {
               visitStatus: "DONE")
           .then((value) => Navigator.pop(context));
     }
+  }
+
+  void saveTest() {
+    final beforeInsert = [];
+    for (var v in _nodes) {
+      if (v.eoeFlag == 'Y') {
+        beforeInsert.add({
+          "visitId": "20230405_826377",
+          "agendaId": "21",
+          "agendaGroup": "NND",
+          "eoeSeq": "1",
+          "eoePmId": "0",
+          "eoeImage": "TGB62ml.jpg",
+          "eoeText": "Tiger B62",
+          "eoeFocus": "Y",
+          "eoeFlag": "Y",
+          "updateBy": "317080"
+        });
+      }
+    }
+    print(beforeInsert);
+    final beforeDel = {"visitId": "20230405_826377", "agendaGroup": "NND"};
+    VisitProvider().DelVisitEOEAll(beforeDel).then((value) async {
+      VisitProvider().insertVisitEOE(beforeInsert).then((value) async {
+        messageAlert.okAlert(
+            context: context, message: "Success", title: "Alert");
+      }).catchError((err) {
+        print(err);
+        messageAlert.okAlert(
+            context: context,
+            message: "insertVisitEOE error",
+            title: "Please contact admin");
+      });
+    }).catchError((err) {
+      print(err);
+      messageAlert.okAlert(
+          context: context,
+          message: "DelVisitEOEAll error",
+          title: "Please contact admin");
+    });
   }
 
   void detailClick(Result item) {

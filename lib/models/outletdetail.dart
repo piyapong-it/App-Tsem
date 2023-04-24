@@ -48,6 +48,12 @@ class Result {
     this.buyFrom2,
     this.saler2Type,
     this.outletImage,
+    this.statusDesc,
+    this.statusId,
+    this.provinceId,
+    this.addr1,
+    this.addr5,
+    this.addr6,
   });
 
   String outletId;
@@ -74,6 +80,12 @@ class Result {
   String buyFrom2;
   String saler2Type;
   String outletImage;
+  String statusDesc;
+  String statusId;
+  String provinceId;
+  String addr1;
+  String addr5;
+  String addr6;
 
   factory Result.fromJson(Map<String, dynamic> json) => Result(
     outletId: json["OutletID"],
@@ -100,6 +112,12 @@ class Result {
     buyFrom2: json["BuyFrom2"],
     saler2Type: json["Saler2Type"],
     outletImage: json["OutletImage"],
+    statusDesc: json["StatusDesc"],
+    statusId: json["StatusId"],
+    provinceId: json["ProvinceId"],
+    addr1: json["Addr1"],
+    addr5: json["Addr5"],
+    addr6: json["Addr6"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -127,5 +145,11 @@ class Result {
     "BuyFrom2": buyFrom2,
     "Saler2Type": saler2Type,
     "OutletImage": outletImage,
+    "StatusDesc": statusDesc,
+    "StatusId": statusId,
+    "ProvinceId": provinceId,
+    "Addr1": addr1,
+    "Addr5": addr5,
+    "Addr6": addr6,
   };
 }

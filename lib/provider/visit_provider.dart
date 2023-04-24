@@ -1,4 +1,3 @@
-
 import 'package:tsem/models/dmlmessage.dart';
 import 'package:tsem/models/visit.dart';
 import 'package:tsem/models/visitagenda.dart';
@@ -6,6 +5,7 @@ import 'package:tsem/models/visitcallcard.dart';
 import 'package:tsem/models/visitcount.dart';
 import 'package:tsem/models/visiteoe.dart';
 import 'package:tsem/models/visitmjp.dart';
+import 'package:tsem/models/itemvisiteoe.dart';
 import 'package:tsem/services/visit_api.dart';
 
 class VisitProvider {
@@ -76,15 +76,15 @@ class VisitProvider {
 
   Future<DmLmessage> updateVisitCallCard(
       {String visitId,
-        int agendaId,
-        String pmid,
-        double premas,
-        double mas,
-        double price,
-        double stock,
-        String productdate,
-        String outletid,
-        String visitdate}) async {
+      int agendaId,
+      String pmid,
+      double premas,
+      double mas,
+      double price,
+      double stock,
+      String productdate,
+      String outletid,
+      String visitdate}) async {
     return api.updateVisitCallCard(
         visitId: visitId,
         agendaId: agendaId,
@@ -104,4 +104,15 @@ class VisitProvider {
         visitId: visitId, agendaId: agendaId, pmid: pmid);
   }
 
+  Future<DmLmessage> insertVisitEOE(data) async {
+    return api.fetchInsertVisitEOE(data);
+  }
+
+  Future<DmLmessage> DelVisitEOEAll(data) async {
+    return api.fetchDelVisitEOEAll(data);
+  }
+
+  Future<ItemVisitEoE> getItemVisitEoE(Object data) async {
+    return api.fetchItemVisitEoE(data);
+  }
 }

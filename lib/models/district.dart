@@ -34,6 +34,8 @@ class DistrictResult {
     districtEng: json["CM#DISTRICT_EN"]
   );
 
+  get isNotEmpty => null;
+
   Map<String, dynamic> toJson() => {
     "CM#DISTRICT_ID": districtId,
     "CM#DISTRICT_NAME": districtName,

@@ -179,6 +179,7 @@ class _VisitAgendaScreenState extends State<VisitAgendaScreen> {
                 visitDate: result.visitDate,
                 agendaId: result.agendaId,
                 agendaGroup: result.agendaGroup,
+                visitId: result.visitId,
               ),
             ),
           ).then((value) {

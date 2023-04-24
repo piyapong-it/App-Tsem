@@ -6,7 +6,7 @@ const kVersion = "1.0.1";
 //const String endpoint = "172.32.100.95:3001";
 /*Development*/
 //  const String endpoint = "10.0.2.2:3000";
-//const String endpoint = "localhost:3000"; 
+// const String endpoint = "localhost:3003"; 
 const String endpoint = "172.32.100.33:3003";
 
 /*Production*/
@@ -18,6 +18,8 @@ const String APPLEVEL = "applevel";
 const String USERNAME = "username";
 const String PASSWORD = "password";
 const String USERTOKEN = "usertoken";
+const String FRISTNAME = 'firstName';
+
 
 const kPrimaryColor = Color(0xFF1976D2);
 const kPrimaryLightColor = Color(0xFFFFECDF);

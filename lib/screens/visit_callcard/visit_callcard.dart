@@ -101,29 +101,29 @@ class _VisitCallCardScreenState extends State<VisitCallCardScreen> {
         ],
       ),
       body: _showCallCard(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CallCardAdd(
-                visitId: widget.visitId,
-                agendaId: widget.agendaId,
-                outletName: widget.outletName,
-                visitDate: widget.visitDate,
-                outletId: widget.outletId,
-              ),
-            ),
-          ).then((value) {
-            setState(() {
-              _nodes = [];
-              getCallCard();
-            });
-          });
-        },
-        tooltip: 'Add Product',
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //         builder: (context) => CallCardAdd(
+      //           visitId: widget.visitId,
+      //           agendaId: widget.agendaId,
+      //           outletName: widget.outletName,
+      //           visitDate: widget.visitDate,
+      //           outletId: widget.outletId,
+      //         ),
+      //       ),
+      //     ).then((value) {
+      //       setState(() {
+      //         _nodes = [];
+      //         getCallCard();
+      //       });
+      //     });
+      //   },
+      //   tooltip: 'Add Product',
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 
